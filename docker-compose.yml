@@ -20,7 +20,7 @@ secrets:
 
 services:
   gophish:
-    image: dhsncats/gophish
+    image: dhsncats/gophish:0.0.1
     init: true
     restart: always
     networks:
@@ -48,7 +48,7 @@ services:
         target: phish_privkey.pem
 
   postfix:
-    image: dhsncats/postfix
+    image: dhsncats/postfix:0.0.2
     init: false
     restart: always
     environment:
