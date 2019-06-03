@@ -43,9 +43,6 @@ This composition exposes the following ports to the localhost:
 - [3380](http://localhost:3380): `gophish phish server`
 - [8025](http://localhost:8025): `mailhog web interface`
 
-The sample [docker composition](docker-compose.yml) publishes the
-exposed ports at 3333, and 3380 respectively.
-
 ### Environment Variables
 
 - postfix
