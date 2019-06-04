@@ -30,7 +30,7 @@ sending profiles for the two servers as listed below:
 
 The `mailhog` email testing tool can be accessed at [http://localhost:8025](http://localhost:8025)
 
-**NOTE**: Do not use the sample certificates in a production environment.
+⚠️ **NOTE**:  Do not use the sample certificates in a production environment.
 They are include to simplify testing.
 
 ### Ports
