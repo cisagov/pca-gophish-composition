@@ -1,4 +1,4 @@
-# pca-gophish-composition 🐳🎣🐷📮
+# pca-gophish-composition 🎣🐷📮🐳
 
 [![Build Status](https://travis-ci.com/cisagov/pca-gophish-composition.svg?branch=develop)](https://travis-ci.com/cisagov/pca-gophish-composition)
 
