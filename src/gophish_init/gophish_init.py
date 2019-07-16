@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Gophish_init is a configuration utility for Gophish.
+"""Gophish-init is a configuration utility for Gophish.
 
 Usage:
   gophish-init [--log-level=LEVEL] [--url=URL] API_KEY
