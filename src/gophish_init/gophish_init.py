@@ -3,8 +3,8 @@
 """Gophish_init is a configuration utility for Gophish.
 
 Usage:
-  gophish_init [--log-level=LEVEL] [--url=URL] API_KEY
-  gophish_init (-h | --help)
+  gophish-init [--log-level=LEVEL] [--url=URL] API_KEY
+  gophish-init (-h | --help)
 
 Options:
   -h --help              Show this message.
