@@ -16,8 +16,8 @@ from setuptools import setup, find_packages
 
 def readme():
     """Read in and return the contents of the project's README.md file."""
-    with open("README.md") as f:
-        return f.read().decode("utf-8")
+    with open("README.md", encoding="utf-8") as f:
+        return f.read()
 
 
 def package_vars(version_file):
