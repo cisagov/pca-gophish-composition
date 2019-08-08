@@ -20,7 +20,7 @@ secrets:
 
 services:
   gophish:
-    image: dhsncats/gophish:0.0.3
+    image: dhsncats/gophish:0.0.4
     init: true
     restart: always
     networks:
