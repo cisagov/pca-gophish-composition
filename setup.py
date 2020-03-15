@@ -8,10 +8,12 @@ Based on:
 - https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure
 """
 
+# Standard Python Libraries
 from glob import glob
-from os.path import splitext, basename
+from os.path import basename, splitext
 
-from setuptools import setup, find_packages
+# Third-Party Libraries
+from setuptools import find_packages, setup
 
 
 def readme():
@@ -79,7 +81,21 @@ setup(
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
     install_requires=["docopt", "gophish"] + gophish_missing_requirements,
-    extras_require={"test": ["pre-commit", "pytest", "pytest-cov", "coveralls"]},
+    extras_require={
+        "test": [
+            "pre-commit",
+            # coveralls 1.11.0 added a service number for calls from
+            # GitHub Actions. This caused a regression which resulted in a 422
+            # response from the coveralls API with the message:
+            # Unprocessable Entity for url: https://coveralls.io/api/v1/jobs
+            # 1.11.1 fixed this issue, but to ensure expected behavior we'll pin
+            # to never grab the regression version.
+            "coveralls != 1.11.0",
+            "coverage",
+            "pytest-cov",
+            "pytest",
+        ]
+    },
     # Conveniently allows one to run the CLI tool as `example`
     entry_points={"console_scripts": ["gophish-init = gophish_init.gophish_init:main"]},
 )

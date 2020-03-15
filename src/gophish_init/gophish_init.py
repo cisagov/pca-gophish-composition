@@ -14,9 +14,11 @@ Options:
                          "warning", "error", and "critical". [default: warning]
 """
 
+# Standard Python Libraries
 import logging
 import sys
 
+# Third-Party Libraries
 import docopt
 from gophish import Gophish
 from gophish.models import SMTP

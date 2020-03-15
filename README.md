@@ -1,6 +1,6 @@
-# pca-gophish-composition 🎣🐷📮🐳
+# pca-gophish-composition 🎣🐷📮🐳 #
 
-[![Build Status](https://travis-ci.com/cisagov/pca-gophish-composition.svg?branch=develop)](https://travis-ci.com/cisagov/pca-gophish-composition)
+[![GitHub Build Status](https://github.com/cisagov/pca-gophish-composition/workflows/build/badge.svg)](https://github.com/cisagov/pca-gophish-composition/actions)
 
 Creates a Docker composition containing instances of:
 
@@ -8,7 +8,7 @@ Creates a Docker composition containing instances of:
 - [mailhog](https://github.com/mailhog/MailHog) email testing tool.
 - [postfix](https://github.com/cisagov/docker-postfix/) mail server.
 
-## Usage
+## Usage ##
 
 A sample [docker composition](docker-compose.yml) is included
 in this repository.
@@ -33,7 +33,7 @@ The `mailhog` email testing tool can be accessed at [http://localhost:8025](http
 ⚠️ **NOTE**:  Do not use the sample certificates in a production environment.
 They are include to simplify testing.
 
-### Ports
+### Ports ###
 
 This composition exposes the following ports to the localhost:
 
@@ -43,13 +43,13 @@ This composition exposes the following ports to the localhost:
 - [3380](http://localhost:3380): `gophish phish server`
 - [8025](http://localhost:8025): `mailhog web interface`
 
-### Environment Variables
+### Environment Variables ###
 
 - postfix
   - `PRIMARY_DOMAIN`: the domain of the mail server
   - `RELAY_IP`: (optional) an IP address that is allowed to relay mail without authentication
 
-### Secrets
+### Secrets ###
 
 - gophish
   - `config.json`: gophish configuration file
@@ -62,18 +62,18 @@ This composition exposes the following ports to the localhost:
   - `privkey.pem`: private key
   - `users.txt`: account credentials
 
-### Volumes
+### Volumes ###
 
 None.
 
-## Contributing
+## Contributing ##
 
 We welcome contributions! Please see [here](CONTRIBUTING.md) for
 details.
 
-## License
+## License ##
 
-This project is in the worldwide [public domain](LICENSE.md).
+This project is in the worldwide [public domain](LICENSE).
 
 This project is in the public domain within the United States, and
 copyright and related rights in the work worldwide are waived through
