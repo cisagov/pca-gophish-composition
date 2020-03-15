@@ -30,18 +30,6 @@ def package_vars(version_file):
     return pkg_vars
 
 
-# these requirements are missing from the gophish-0.2.5 install_requires
-# these extras will be required until the following PR is merged:
-# https://github.com/gophish/api-client-python/pull/16
-gophish_missing_requirements = [
-    "appdirs==1.4.0",
-    "packaging==16.8",
-    "pyparsing==2.1.10",
-    "python-dateutil==2.6.0",
-    "requests>=2.20.0",
-    "six==1.10.0",
-]
-
 setup(
     name="gophish_init",
     # Versions should comply with PEP440
@@ -80,7 +68,7 @@ setup(
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
-    install_requires=["docopt", "gophish"] + gophish_missing_requirements,
+    install_requires=["docopt", "gophish"],
     extras_require={
         "test": [
             "pre-commit",
