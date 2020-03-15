@@ -34,7 +34,7 @@ setup(
     name="gophish_init",
     # Versions should comply with PEP440
     version=package_vars("src/gophish_init/_version.py")["__version__"],
-    description="Gophish initilization library",
+    description="GoPhish initialization library",
     long_description=readme(),
     long_description_content_type="text/markdown",
     # NCATS "homepage"
