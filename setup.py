@@ -30,23 +30,11 @@ def package_vars(version_file):
     return pkg_vars
 
 
-# these requirements are missing from the gophish-0.2.5 install_requires
-# these extras will be required until the following PR is merged:
-# https://github.com/gophish/api-client-python/pull/16
-gophish_missing_requirements = [
-    "appdirs==1.4.0",
-    "packaging==16.8",
-    "pyparsing==2.1.10",
-    "python-dateutil==2.6.0",
-    "requests>=2.20.0",
-    "six==1.10.0",
-]
-
 setup(
     name="gophish_init",
     # Versions should comply with PEP440
     version=package_vars("src/gophish_init/_version.py")["__version__"],
-    description="Gophish initilization library",
+    description="GoPhish initialization library",
     long_description=readme(),
     long_description_content_type="text/markdown",
     # NCATS "homepage"
@@ -80,10 +68,10 @@ setup(
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
-    install_requires=["docopt", "gophish"] + gophish_missing_requirements,
+    install_requires=["docopt", "gophish"],
     extras_require={
         "test": [
-            "pre-commit",
+            "coverage",
             # coveralls 1.11.0 added a service number for calls from
             # GitHub Actions. This caused a regression which resulted in a 422
             # response from the coveralls API with the message:
@@ -91,9 +79,10 @@ setup(
             # 1.11.1 fixed this issue, but to ensure expected behavior we'll pin
             # to never grab the regression version.
             "coveralls != 1.11.0",
-            "coverage",
-            "pytest-cov",
+            "pre-commit",
             "pytest",
+            "pytest-cov",
+            "pytest-dockerc",
         ]
     },
     # Conveniently allows one to run the CLI tool as `example`
