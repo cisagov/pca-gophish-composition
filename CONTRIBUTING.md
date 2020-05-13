@@ -15,8 +15,13 @@ Before contributing, we encourage you to read our CONTRIBUTING policy
 
 If you want to report a bug or request a new feature, the most direct
 method is to [create an
+<<<<<<< HEAD
 issue](https://github.com/cisagov/pca-gophish-composition/issues) in this
 repository. We recommend that you first search through existing
+=======
+issue](https://github.com/cisagov/skeleton-docker/issues) in this
+repository.  We recommend that you first search through existing
+>>>>>>> 4de6b59dd041229073cb15571ec5a1c005f6cad6
 issues (both open and closed) to check if your particular issue has
 already been reported. If it has then you might want to add a comment
 to the existing issue. If it hasn't then feel free to create a new
@@ -25,7 +30,11 @@ one.
 ## Pull requests ##
 
 If you choose to [submit a pull
+<<<<<<< HEAD
 request](https://github.com/cisagov/pca-gophish-composition/pulls), you will
+=======
+request](https://github.com/cisagov/skeleton-docker/pulls), you will
+>>>>>>> 4de6b59dd041229073cb15571ec5a1c005f6cad6
 notice that our continuous integration (CI) system runs a fairly
 extensive set of linters and syntax checkers. Your pull request may
 fail these checks, and that's OK. If you want you can stop there and
@@ -99,9 +108,15 @@ can create and configure the Python virtual environment with these
 commands:
 
 ```console
+<<<<<<< HEAD
 cd pca-gophish-composition
 pyenv virtualenv <python_version_to_use> pca-gophish-composition
 pyenv local pca-gophish-composition
+=======
+cd skeleton-docker
+pyenv virtualenv <python_version_to_use> skeleton-docker
+pyenv local skeleton-docker
+>>>>>>> 4de6b59dd041229073cb15571ec5a1c005f6cad6
 pip install --requirement requirements-dev.txt
 ```
 

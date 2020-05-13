@@ -10,4 +10,8 @@ tests:
 # - B102
 
 skips:
+<<<<<<< HEAD
   - B101 # skip "assert used" check since assertions are required in pytests
+=======
+  - B101  # skip "assert used" check since assertions are required in pytests
+>>>>>>> 4de6b59dd041229073cb15571ec5a1c005f6cad6

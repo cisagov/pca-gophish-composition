@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 __pycache__
 .mypy_cache
 .pytest_cache
 .python-version
 *.egg-info
+=======
+.mypy_cache
+.pytest_cache
+.python-version
+__pycache__
+>>>>>>> 4de6b59dd041229073cb15571ec5a1c005f6cad6
