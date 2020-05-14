@@ -16,11 +16,7 @@ repos:
         args:
           - --allow-missing-credentials
       - id: detect-private-key
-<<<<<<< HEAD
         exclude: secrets/postfix/privkey.pem|secrets/gophish/admin_privkey.pem
-=======
-        exclude: src/secrets/privkey.pem
->>>>>>> 4de6b59dd041229073cb15571ec5a1c005f6cad6
       - id: end-of-file-fixer
         exclude: files/(issue|motd)
       - id: mixed-line-ending

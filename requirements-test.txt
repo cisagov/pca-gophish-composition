@@ -1,7 +1,1 @@
-<<<<<<< HEAD
 -e .[test]
-=======
-pre-commit
-pytest
-pytest-dockerc
->>>>>>> 4de6b59dd041229073cb15571ec5a1c005f6cad6
