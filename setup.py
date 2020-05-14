@@ -85,6 +85,6 @@ setup(
             "pytest-dockerc",
         ]
     },
-    # Conveniently allows one to run the CLI tool as `example`
+    # Conveniently allows one to run the CLI tool as `gophish-init`
     entry_points={"console_scripts": ["gophish-init = gophish_init.gophish_init:main"]},
 )
