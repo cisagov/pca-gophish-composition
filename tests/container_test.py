@@ -62,11 +62,3 @@ def test_wait_for_ready_mailhog(mailhog_container):
             f"Container does not seem ready.  "
             f'Expected "{ready_message}" in the log within {TIMEOUT} seconds.'
         )
-
-
-def test_wait_for_exits(main_container, version_container):
-    """Wait for containers to exit."""
-    assert main_container.wait() == 0, "Container service (main) did not exit cleanly"
-    assert (
-        version_container.wait() == 0
-    ), "Container service (version) did not exit cleanly"
