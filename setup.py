@@ -40,7 +40,7 @@ setup(
     # NCATS "homepage"
     url="https://www.us-cert.gov/resources/ncats",
     # The project's main homepage
-    download_url="https://github.com/cisagov/skeleton-python-library",  # TODO
+    download_url="https://github.com/cisagov/pca-gophish-composition",
     # Author details
     author="Cyber and Infrastructure Security Agency",
     author_email="ncats@hq.dhs.gov",
@@ -85,6 +85,6 @@ setup(
             "pytest-dockerc",
         ]
     },
-    # Conveniently allows one to run the CLI tool as `example`
+    # Conveniently allows one to run the CLI tool as `gophish-init`
     entry_points={"console_scripts": ["gophish-init = gophish_init.gophish_init:main"]},
 )
