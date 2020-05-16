@@ -48,7 +48,7 @@ services:
         target: phish_privkey.pem
 
   postfix:
-    image: dhsncats/postfix:latest
+    image: cisagov/postfix:latest
     init: false
     restart: always
     environment:
