@@ -19,7 +19,7 @@ def test_container_count(dockerc):
     ), "Wrong number of containers were started."
 
 
-def test_successful_exit(gophish_tools_container):
+def test_successful_exit_gophish_tools(gophish_tools_container):
     """Confirm successful exit code from gophish-tools container."""
     SUCCESSFUL_EXIT = 0
     TIMEOUT = 10
