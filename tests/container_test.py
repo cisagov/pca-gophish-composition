@@ -15,8 +15,23 @@ def test_container_count(dockerc):
     """Verify the test composition and container."""
     # stopped parameter allows non-running containers in results
     assert (
-        len(dockerc.containers(stopped=True)) == 3
+        len(dockerc.containers(stopped=True)) == 4
     ), "Wrong number of containers were started."
+
+
+def test_successful_exit(gophish_tools_container):
+    """Confirm successful exit code from gophish-tools container."""
+    SUCCESSFUL_EXIT = 0
+    TIMEOUT = 10
+    for i in range(TIMEOUT):
+        if gophish_tools_container.exit_code == SUCCESSFUL_EXIT:
+            break
+        time.sleep(1)
+    else:
+        raise Exception(
+            f"Container did not exit successfully.  "
+            f'Expected exit code "{SUCCESSFUL_EXIT}" within {TIMEOUT} seconds.'
+        )
 
 
 def test_wait_for_ready_gophish(gophish_container):
