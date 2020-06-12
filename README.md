@@ -5,6 +5,7 @@
 Creates a Docker composition containing instances of:
 
 - [gophish](https://github.com/cisagov/docker-gophish/) phishing framework.
+- [gophish-tools](https://github.com/cisagov/gophish-tools/) helper scripts.
 - [mailhog](https://github.com/mailhog/MailHog) email testing tool.
 - [postfix](https://github.com/cisagov/docker-postfix/) mail server.
 
@@ -14,6 +15,11 @@ A sample [docker composition](docker-compose.yml) is included
 in this repository.
 
 To start the composition use the command: `docker-compose up`
+
+It's normal for the `gophish-tools` container to exit shortly after startup;
+it is included in this composition as a convenience for phishing operators.
+For usage details, read the
+[`gophish-tools` documentation](https://github.com/cisagov/gophish-tools/).
 
 Connect to the `gophish` admin web interface at:
 [https://localhost:3333](https://localhost:3333).
