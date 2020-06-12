@@ -86,6 +86,12 @@ services:
         protocol: tcp
         mode: host
 
+  gophish-tools:
+    image: cisagov/gophish-tools:latest
+    networks:
+      front:
+        ipv4_address: 172.16.202.5
+
 networks:
   front:
     driver: bridge
