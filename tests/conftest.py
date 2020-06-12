@@ -14,6 +14,13 @@ def gophish_container(dockerc):
 
 
 @pytest.fixture(scope="session")
+def gophish_tools_container(dockerc):
+    """Return the gophish-tools container from the docker composition."""
+    # find the container by name even if it is stopped already
+    return dockerc.containers(service_names=["gophish-tools"], stopped=True)[0]
+
+
+@pytest.fixture(scope="session")
 def postfix_container(dockerc):
     """Return the postfix container from the docker composition."""
     # find the container by name even if it is stopped already
