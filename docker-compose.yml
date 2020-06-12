@@ -23,8 +23,6 @@ services:
     image: cisagov/gophish:0.0.5
     init: true
     restart: always
-    networks:
-      - front
     ports:
       - target: 3333
         published: 3333
@@ -48,14 +46,10 @@ services:
 
   gophish-tools:
     image: cisagov/gophish-tools:latest
-    networks:
-      - front
 
   mailhog:
     image: mailhog/mailhog
     restart: always
-    networks:
-      - front
     ports:
       - target: 8025
         published: 8025
@@ -71,8 +65,6 @@ services:
       # Mail relay through postfix will only work if the RELAY_IP matches
       # the front network subnet below.
       - RELAY_IP=172.16.202.0/24
-    networks:
-      - front
     ports:
       - target: "25"
         published: "1025"
@@ -91,7 +83,7 @@ services:
         target: users.txt
 
 networks:
-  front:
+  default:
     driver: bridge
     ipam:
       driver: default
