@@ -47,6 +47,24 @@ services:
       - source: gophish_phish_privkey_pem
         target: phish_privkey.pem
 
+  gophish-tools:
+    image: cisagov/gophish-tools:latest
+    networks:
+      front:
+        ipv4_address: 172.16.202.5
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: always
+    networks:
+      front:
+        ipv4_address: 172.16.202.3
+    ports:
+      - target: 8025
+        published: 8025
+        protocol: tcp
+        mode: host
+
   postfix:
     image: cisagov/postfix:latest
     init: false
@@ -73,24 +91,6 @@ services:
         target: privkey.pem
       - source: postfix_users_txt
         target: users.txt
-
-  mailhog:
-    image: mailhog/mailhog
-    restart: always
-    networks:
-      front:
-        ipv4_address: 172.16.202.3
-    ports:
-      - target: 8025
-        published: 8025
-        protocol: tcp
-        mode: host
-
-  gophish-tools:
-    image: cisagov/gophish-tools:latest
-    networks:
-      front:
-        ipv4_address: 172.16.202.5
 
 networks:
   front:
