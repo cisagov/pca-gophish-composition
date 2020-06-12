@@ -24,8 +24,7 @@ services:
     init: true
     restart: always
     networks:
-      front:
-        ipv4_address: 172.16.202.4
+      - front
     ports:
       - target: 3333
         published: 3333
@@ -50,15 +49,13 @@ services:
   gophish-tools:
     image: cisagov/gophish-tools:latest
     networks:
-      front:
-        ipv4_address: 172.16.202.5
+      - front
 
   mailhog:
     image: mailhog/mailhog
     restart: always
     networks:
-      front:
-        ipv4_address: 172.16.202.3
+      - front
     ports:
       - target: 8025
         published: 8025
@@ -71,10 +68,11 @@ services:
     restart: always
     environment:
       - PRIMARY_DOMAIN=example.com
+      # Mail relay through postfix will only work if the RELAY_IP matches
+      # the front network subnet below.
       - RELAY_IP=172.16.202.0/24
     networks:
-      front:
-        ipv4_address: 172.16.202.2
+      - front
     ports:
       - target: "25"
         published: "1025"
