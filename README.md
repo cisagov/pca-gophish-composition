@@ -20,6 +20,25 @@ It's normal for the `gophish-tools` container to exit shortly after startup;
 it is included in this composition as a convenience for phishing operators.
 For usage details, read the
 [`gophish-tools` documentation](https://github.com/cisagov/gophish-tools/).
+The following `gophish-tools` helper scripts are available in the
+`gophish-tools` directory:
+
+- `import_assessment.sh`: Simplifies the process of importing an assessment
+  JSON file into the GoPhish server running in the local Docker composition
+  (calls
+  [`gophish-tools/gophish-import`](https://github.com/cisagov/gophish-tools/blob/develop/src/tools/gophish_import.py)
+  and [`gophish-tools/gophish-complete`](https://github.com/cisagov/gophish-tools/blob/develop/src/tools/gophish_complete.py)).
+- `export_assessment.sh`: Simplifies the process of exporting assessment data
+  from the GoPhish server running in the local Docker composition to a JSON
+  file (calls
+  [`gophish-tools/gophish-export`](https://github.com/cisagov/gophish-tools/blob/develop/src/tools/gophish_export.py)).
+- `complete_campaign.sh`: Simplifies the process of completing a campaign
+  on the GoPhish server running in the local Docker composition (calls
+  [`gophish-tools/gophish-complete`](https://github.com/cisagov/gophish-tools/blob/develop/src/tools/gophish_complete.py)).
+- `test_assessment.sh`: Simplifies the process of sending test emails for
+  an assessment in the GoPhish server running in the local Docker
+  composition (calls
+  [`gophish-tools/gophish-test`](https://github.com/cisagov/gophish-tools/blob/develop/src/tools/gophish_test.py)).
 
 Connect to the `gophish` admin web interface at:
 [https://localhost:3333](https://localhost:3333).
