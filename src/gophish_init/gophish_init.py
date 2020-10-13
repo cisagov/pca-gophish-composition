@@ -71,7 +71,7 @@ def configure(api_key, url):
 
 
 def main():
-    """Set up logging and call the example function."""
+    """Set up logging and call the configure function."""
     args = docopt.docopt(__doc__, version=__version__)
     # Set up logging
     log_level = args["--log-level"]
