@@ -11,8 +11,8 @@ set -o pipefail
 
 if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]
 then
-    echo "Usage: test_assessment.sh ASSESSMENT_ID"
-    exit 255
+  echo "Usage: test_assessment.sh ASSESSMENT_ID"
+  exit 255
 fi
 
 # Source common variables and functions

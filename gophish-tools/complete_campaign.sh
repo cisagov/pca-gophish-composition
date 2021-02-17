@@ -11,8 +11,8 @@ set -o pipefail
 
 if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]
 then
-    echo "Usage: complete_campaign.sh CAMPAIGN_ID"
-    exit 255
+  echo "Usage: complete_campaign.sh CAMPAIGN_ID"
+  exit 255
 fi
 
 # Source common variables and functions
@@ -32,7 +32,7 @@ API_KEY=$(get_gophish_api_key)
 # Run gophish-complete in the Docker composition
 docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
   gophish-tools gophish-complete "--campaign=$CAMPAIGN_ID" \
-    "$GOPHISH_URL" "$API_KEY"
+  "$GOPHISH_URL" "$API_KEY"
 complete_rc="$?"
 if [ "$complete_rc" -eq 0 ]
 then
