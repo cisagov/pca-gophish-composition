@@ -21,7 +21,7 @@ secrets:
 
 services:
   gophish:
-    image: cisagov/gophish:0.0.5
+    image: cisagov/gophish:latest
     init: true
     restart: always
     ports:
