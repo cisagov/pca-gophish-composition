@@ -42,7 +42,7 @@ The following `gophish-tools` helper scripts are available in the
 
 Connect to the `gophish` admin web interface at:
 [https://localhost:3333](https://localhost:3333).
-The default credentials are `admin`, `gophish`.
+The default credentials are `admin`, `gophish1`.
 
 Once the composition is running, `gophish` will need to be
 configured to talk to `mailhog` and `postfix`. Create new
