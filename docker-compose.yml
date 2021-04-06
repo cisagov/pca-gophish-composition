@@ -21,7 +21,9 @@ secrets:
 
 services:
   gophish:
-    image: cisagov/gophish:latest
+    # Reminder: cisagov/gophish Docker images are created with
+    # cisagov/gophish-docker, not cisagov/gophish!
+    image: cisagov/gophish:0.11.0-cisa.1
     init: true
     restart: always
     ports:
