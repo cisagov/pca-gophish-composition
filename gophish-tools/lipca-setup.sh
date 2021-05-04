@@ -16,7 +16,7 @@ create_assessment () {
   FULL_ASSESSMENT_PATH=$TEMP_FULL_PATH/$ASSESSMENT_NAME
 
   # Run using docker gophish-tools image
-  sudo docker run -it -v $('pwd')/$TEMP_DIR_NAME:/home/cisa cisagov/gophish-tools pca-wizard "$ASSESSMENT_NAME"
+  sudo docker run -it -v "$('pwd')"/"$TEMP_DIR_NAME":/home/cisa cisagov/gophish-tools pca-wizard "$ASSESSMENT_NAME"
   echo "Saved Assessment at: $TEMP_FULL_PATH/$ASSESSMENT_NAME"
 }
 
