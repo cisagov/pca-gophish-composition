@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """Gophish-init is a configuration utility for Gophish.
 
 Usage:
@@ -90,7 +88,3 @@ def main() -> None:
 
     # Stop logging and clean up
     logging.shutdown()
-
-
-if __name__ == "__main__":
-    sys.exit(main())
