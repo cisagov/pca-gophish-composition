@@ -9,8 +9,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]
-then
+if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
   echo "Usage: import_assessment.sh ASSESSMENT_FILE"
   exit 255
 fi
@@ -36,8 +35,7 @@ docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
   --volume "$ASSESSMENT_FILE_DIR":/home/cisa gophish-tools \
   gophish-import "$ASSESSMENT_FILE_BASE" "$GOPHISH_URL" "$API_KEY"
 import_rc="$?"
-if [ "$import_rc" -eq 0 ]
-then
+if [ "$import_rc" -eq 0 ]; then
   echo "Assessment successfully imported from $ASSESSMENT_FILE!"
   echo ""
 else
@@ -48,8 +46,7 @@ set -o errexit
 
 # Schedule each campaign to be completed at the specified time
 # via the "at" command
-for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE")
-do
+for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE"); do
   campaign_name=$(jq -r ".campaigns[$campaign].name" "$ASSESSMENT_FILE")
   end_date=$(jq -r ".campaigns[$campaign].complete_date" "$ASSESSMENT_FILE")
 
@@ -57,11 +54,10 @@ do
 
   # Disable errexit to allow error-handling of next command
   set +o errexit
-  echo "$SCRIPTS_DIR/complete_campaign.sh $campaign_name" | \
-    at -M -t "$end_date_in_at_format"
+  echo "$SCRIPTS_DIR/complete_campaign.sh $campaign_name" \
+    | at -M -t "$end_date_in_at_format"
   schedule_rc="$?"
-  if [ "$schedule_rc" -eq 0 ]
-  then
+  if [ "$schedule_rc" -eq 0 ]; then
     echo "Successfully scheduled campaign $campaign_name to complete at $end_date."
   else
     echo "ERROR: Failed to schedule campaign $campaign_name to complete at $end_date!"

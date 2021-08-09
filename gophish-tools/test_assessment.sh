@@ -9,8 +9,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]
-then
+if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
   echo "Usage: test_assessment.sh ASSESSMENT_ID"
   exit 255
 fi
@@ -33,8 +32,7 @@ API_KEY=$(get_gophish_api_key)
 docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
   gophish-tools gophish-test "$ASSESSMENT_ID" "$GOPHISH_URL" "$API_KEY"
 test_rc="$?"
-if [ "$test_rc" -eq 0 ]
-then
+if [ "$test_rc" -eq 0 ]; then
   echo "Assessment $ASSESSMENT_ID test succeeded!"
 else
   echo "ERROR: Assessment $ASSESSMENT_ID test failed!"

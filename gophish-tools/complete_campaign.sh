@@ -9,8 +9,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]
-then
+if [ $# -ne 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
   echo "Usage: complete_campaign.sh CAMPAIGN_ID"
   exit 255
 fi
@@ -34,8 +33,7 @@ docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
   gophish-tools gophish-complete "--campaign=$CAMPAIGN_ID" \
   "$GOPHISH_URL" "$API_KEY"
 complete_rc="$?"
-if [ "$complete_rc" -eq 0 ]
-then
+if [ "$complete_rc" -eq 0 ]; then
   echo "GoPhish campaign $CAMPAIGN_ID successfully completed!"
 else
   echo "ERROR: Failed to complete GoPhish campaign $CAMPAIGN_ID!"
