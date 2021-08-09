@@ -70,7 +70,7 @@ def configure(api_key, url):
         create_send_profile(api, **profile)
 
 
-def main():
+def main() -> None:
     """Set up logging and call the configure function."""
     args = docopt.docopt(__doc__, version=__version__)
     # Set up logging
@@ -84,13 +84,12 @@ def main():
             '"{}" is not a valid logging level.  Possible values '
             "are debug, info, warning, and error.".format(log_level)
         )
-        return 1
+        sys.exit(1)
 
     configure(args["API_KEY"], args["--url"])
 
     # Stop logging and clean up
     logging.shutdown()
-    return 0
 
 
 if __name__ == "__main__":
