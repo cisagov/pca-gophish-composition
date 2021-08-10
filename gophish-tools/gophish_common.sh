@@ -14,8 +14,7 @@ function get_gophish_api_key {
   # Fetch GoPhish API key
   API_KEY=$(docker-compose -f "$GOPHISH_COMPOSITION" exec -T gophish get-api-key)
   api_key_rc="$?"
-  if [ "$api_key_rc" -ne 0 ]
-  then
+  if [ "$api_key_rc" -ne 0 ]; then
     echo "ERROR: Failed to obtain GoPhish API key from Docker composition."
     echo "Exiting without importing."
     exit 1
