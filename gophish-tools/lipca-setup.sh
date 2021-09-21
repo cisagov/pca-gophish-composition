@@ -1,60 +1,61 @@
 #!/usr/bin/env bash
+
+#============================
+#   Li-PCA Script Script
+#============================
+# This setup/management script simplifies the creation/management of campaigns
+# in GoPhish by orchestrating the flow of the capabilities derived from
+# cisagov/gophish-tools project as well as other scripts within this project.
 #
-# Li-PCA Script Script
+# The benefit provided is removal of the legacy approach where manual user
+# interaction was reqneed by the user to create template/import files and move
+# them to the correct path locations through various steps. This also removes
+# the need to remember various docker run commands for various images/scripts
+# and simplifying the flow of the gophish campaign interaction process.#
 #
-# This script simplifies the process of assessment management in GoPhish and
-# is meant to be ran from the COOL host's pca-gophish-composition/gophish-tools.
-# It will execute commands in various docker containers and move configs and output
-# as needed. Logs and output files will be stored in the directory
-# "/home/vnc/lipca-temp" for reference.
+# OVERRIDE DEFAULT VALUES WITH ENV VARS AS NEEDED
 #
-# The script will ask a series of questions that you will need to complete along
-# the way.
-#
-# **For multiple outgoing mail errors or "Connections Refused" output issues,
-# try restarting the postfix container by running "docker-compose restart
-# postfix". Wait for the container to start and then try again.
-#
-# TODO: Consider refacoring/rewriting as a more generic python cli tool
-# (possibly the click python library?). We would get more flexibility with
-# passing args/flags to thelipca-taolthis a  lipca-tool
-
-# Override default values with ENV vars in container if needed.
+# Documentation: https://github.com/cisagov/pca-runbooks/wiki/X:-Li-PCA-Infrastructure-Setup-(in-work)
 
 
-# Base Paths
-CISA_HOME=/home/cisa
-PCA_GOPHISH_COMP_ROOT_PATH=/var/pca/pca-gophish-composition
-GOPHISH_UTILS_ROOT_PATH="$PCA_GOPHISH_COMP_ROOT_PATH/gophish-tools"
-COMPLETE_CAMPAIGN_PATH="$GOPHISH_UTILS_ROOT_PATH/complete_campaign.sh"
-IMPORT_ASSESSMENT_PATH="$GOPHISH_UTILS_ROOT_PATH/import_assessment.sh"
-TEST_ASSESSMENT_PATH="$GOPHISH_UTILS_ROOT_PATH/test_assessment.sh"
-EXPORT_ASSESSMENT_PATH="$GOPHISH_UTILS_ROOT_PATH/export_assessment.sh"
+# BASE PATHS
+CISA_HOME="${CISA_HOME:-/home/cisa}"
+PCA_GOPHISH_COMP_ROOT_PATH="${PCA_GOPHISH_COMP_ROOT_PATH:-/var/pca/pca-gophish-composition}"
+GOPHISH_UTILS_ROOT_PATH="${GOPHISH_UTILS_ROOT_PATH:-$PCA_GOPHISH_COMP_ROOT_PATH/gophish-tools}"
+COMPLETE_CAMPAIGN_PATH="${COMPLETE_CAMPAIGN_PATH:-$GOPHISH_UTILS_ROOT_PATH/complete_campaign.sh}"
+IMPORT_ASSESSMENT_PATH="${IMPORT_ASSESSMENT_PATH:-$GOPHISH_UTILS_ROOT_PATH/import_assessment.sh}"
+TEST_ASSESSMENT_PATH="${TEST_ASSESSMENT_PATH:-$GOPHISH_UTILS_ROOT_PATH/test_assessment.sh}"
+EXPORT_ASSESSMENT_PATH="${EXPORT_ASSESSMENT_PATH:-$GOPHISH_UTILS_ROOT_PATH/export_assessment.sh}"
 
-# Image Names
-TOOLS_IMAGE_NAME=cisagov/gophish-tools:0.0.6-rc.11
+# IMAGE NAMES
+TOOLS_IMAGE_NAME="${TOOLS_IMAGE_NAME:-cisagov/gophish-tools}"
 
-# Aliases
-TEMPLATE_ALIAS=pca-wizard-templates
-WIZARD_ALIAS=pca-wizard
+# ALIASES
+TEMPLATE_ALIAS="${TEMPLATE_ALIAS:-pca-wizard-templates}"
+WIZARD_ALIAS="${WIZARD_ALIAS:-pca-wizard}"
 
-# Local volume for data from containers
+# LOCAL VOLUME MAPPING PATHS
 EFS_SHARE="${ENV_SHARE:-/share}"
 PCA_OPS_PATH="${PCA_OPS_PATH:-$EFS_SHARE/PCA}"
 PCA_DEV_PATH="${PCA_DEV_PATH:-$EFS_SHARE/private}"
 
-# OPS Path Setup
+# OPS PATH SETUP
 ASSESSMENT_PATH="${PCA_ASSESSMENT_PATH:-$PCA_DEV_PATH/assessments}"
 LOG_PATH="${PCA_LOG_PATH:-$PCA_DEV_PATH/logs}"
 LOG_FILE="${PCA_LOG_FILE:-$LOG_PATH/log-$(date +'%m-%d-%Y_%H-%M-%S')}"
 
-# DEV Path Setup
+# DEV PATH SETUP
 TEMPLATE_PATH="${PCA_TEMPLATE_PATH:-$PCA_OPS_PATH/templates}"
 EXPORT_PATH="${PCA_EXPORT_PATH:-$PCA_OPS_PATH/exports}"
+TEMPLATE_INJESTION_PATH="${TEMPLATE_INJESTION_PATH:-$ASSESSMENT_PATH}"
 
-# Assessment Placeholders
+# ASSESSMENT PLACEHOLDERS
 ASSESSMENT_NAME="${PCA_ASSESSMENT_NAME:-assessment-$(date +'%m-%d-%Y_%H-%M-%S')}"
 ASSESSMENT_ID=""
+
+# TEMMPLATE NAMES
+TEMPLATE_EMAIL_FILENAME="${TEMPLATE_EMAIL_FILENAME:-template_email.json}"
+TEMPLATE_TARGETS_FILENAME="${TEMPLATE_TARGETS_FILENAME:-template_targets.csv}"
 
 
 #=============================
@@ -62,8 +63,8 @@ ASSESSMENT_ID=""
 #=============================
 
 output_dir_setup() {
-  # Setup /share subdir and permissions
-  # TODO: Determine ownership needs and setup here. Is sudo required?
+  # Setup /share subdirs and permissions for mapped volume data
+  # TODO: Determine ownership needs and setup here. Remove sudo if possible.
   sudo mkdir -p "$PCA_DEV_PATH"
   sudo mkdir -p "$PCA_OPS_PATH"
   sudo mkdir -p "$TEMPLATE_PATH"
@@ -76,7 +77,7 @@ output_dir_setup() {
 
 logging_setup() {
   exec &> >(tee -a "$LOG_FILE")
-  echo "Logging destination: %s" "$LOG_PATH"
+  echo "Log file created at: $LOG_PATH"
 }
 
 handle_error() {
@@ -90,21 +91,23 @@ handle_error() {
 #=============================
 
 create_target_template() {
-  # Runs pca-wizard-templates tool in gophish-tools container and output
-  # a pre-formatted csv file named "template_targets.csv" in the lipca-temp directory.
-  sudo docker run -it --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t
+  # Runs pca-wizard-templates tool in gophish-tools container and outputs
+  # a pre-formatted csv file named "template_targets.csv" in the specified
+  # directory and open vim to edit the template as needed for modification.
+  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && sudo vi /share/PCA/templates/template_targets.csv;
 }
 
 create_email_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
-  # a pre-formatted json file named "template_email.json" file in the lipca-temp directory.
-  sudo docker run -it --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e
+  # a pre-formatted json file named "template_email.json" file in the specified
+  # directory and open vim to edit the template as needed for modification.
+  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && sudo vi /share/PCA/templates/template_email.json;
 }
 
 email_template_prompt() {
   # Prompt user and ask if template generation is needed.
   while true; do
-    read -rp "Do you need an email template file generated? (y/n) " yn
+    read -rp "Do you need an email template file generated? (yes/no) " yn
     case $yn in
       [Yy]*)
         create_email_template
@@ -120,14 +123,14 @@ target_template_prompt() {
   # Prompt user and ask if template generation is needed.
   while true; do
     # Input R
-    read -rp "Do you need an email targets file generated? (y/n) " yn
+    read -rp "Do you need an targets template file generated? (yes/no) " yn
     case $yn in
       [Yy]*)
         create_target_template
         break
         ;;
       [Nn]*)
-        echo "Skipping target Template creation and proceeding with setup."
+        echo "Skipping targets template creation and proceeding with setup."
         break
         ;;
       *) echo "Please answer yes or no." ;;
@@ -139,34 +142,31 @@ target_template_prompt() {
 #=============================
 #     ASSESSMENT TOOLS
 #=============================
+
 create_assessment() {
-  #  Runs the pca-wizard tool to setup a new campaign generate and saves the
-  #  output json to the lipca-temp directory for importing
-
-  # Make dir for assessment output
-
+  # Runs the pca-wizard tool to setup a new campaign generate and saves the
+  # output json to the lipca-temp directory for importing
   read -rp 'Enter assessment id/name for new assessment: ' id
   read -rp 'Enter level of the new assessment (1-6): ' level
 
-  # TODO: Determine if we want to mix underscores and hypens in level naming.
+  # TODO: Determine if we want to keep mix of underscores and hypens in level naming.
   ASSESSMENT_NAME="$id"_level-"$level"
-  # ASSESSMENT_NAME="$id"
-
-  # TODO: Determine if we want to specify date or automate name
-  # ASSESSMENT_NAME="assessment-$(date +'%m-%d-%Y_%H-%M-%S')"
-
   FULL_ASSESSMENT_PATH="$ASSESSMENT_PATH/$ASSESSMENT_NAME"
 
+  # Copy templates for injestion
+  echo "Copying template files named template_* for use in setup process."
+  sudo cp /share/PCA/templates/template_* "$TEMPLATE_INJESTION_PATH"
+  echo "Templates copied to: $TEMPLATE_INJESTION_PATH"
+
   # Run using docker gophish-tools image pca-wizard
-  sudo docker run -it --workdir="$CISA_HOME" -v "$ASSESSMENT_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$WIZARD_ALIAS" "$ASSESSMENT_NAME"
-  echo "Saved Assessment at: $FULL_ASSESSMENT_PATH"
+  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$ASSESSMENT_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$WIZARD_ALIAS" "$ASSESSMENT_NAME"
+  echo "Saved Assessment: $FULL_ASSESSMENT_PATH"
 }
 
 import_assessment() {
   # Runs the import-assessment.sh script to import the generated assessment.json
   # data in the lipca-temp dir (generated from create_assessment)
   "$IMPORT_ASSESSMENT_PATH" "$FULL_ASSESSMENT_PATH".json
-  # cd /var/pca/pca-gophish-composition/gophish-tools && ./import_assessment.sh "$FULL_ASSESSMENT_PATH".json
 }
 
 export_assessment() {
@@ -177,7 +177,7 @@ export_assessment() {
 
 
 test_assessment() {
-  ## Run test_assessment.sh script against the newly imported assessment
+  # Run test_assessment.sh script against the newly imported assessment
   "$TEST_ASSESSMENT_PATH" "$ASSESSMENT_ID"
 }
 
@@ -185,12 +185,12 @@ test_assessment() {
 export_by_id_prompt() {
   # Prompts the user to asking if assessment export is needed. Requires
   while true; do
-    read -rp "Would you like to export data from an existing completed assessment? (y/n) " yn
+    read -rp "Would you like to export data from an existing completed assessment? (yes/no) " yn
     case $yn in
       [Yy]*)
         read -rp "Enter the ASSESSMENT_ID to export data: " id
         ASSESSMENT_ID="$id"
-        export_assessment && break ;;
+        export_assessment && exit ;;
       [Nn]*) echo "Skipping assessment export.." && break ;;
       *) echo "Please specify the ASSESSMENT_ID." ;;
     esac
@@ -201,7 +201,7 @@ export_by_id_prompt() {
 export_prompt() {
   # Prompts the user to ask if assessment data export is required.
   while true; do
-    read -rp "Do you want to export data from an existing completed assessment? (y/n) " yn
+    read -rp "Do you want to export data from an existing completed assessment? (yes/no) " yn
     case $yn in
       [Yy]*)
         # test_assessment
@@ -215,10 +215,40 @@ export_prompt() {
   done
 }
 
+
+edit_email_temp_prompt() {
+  while true; do
+    read -rp "Do you want to edit the created email template? (yes/no) " yn
+    case $yn in
+      [Yy]*)
+        sudo vi "$TEMPLATE_PATH/$TEMPLATE_EMAIL_FILENAME";
+        break
+        ;;
+      [Nn]*) echo "Skipping template editing." && break ;;
+      *) echo "Please answer yes or no." ;;
+    esac
+  done
+}
+
+
+edit_targets_temp_prompt() {
+  while true; do
+    read -rp "Do you want to edit the created targets template? (yes/no) " yn
+    case $yn in
+      [Yy]*)
+        sudo vi "$TEMPLATE_PATH/$TEMPLATE_TARGETS_FILENAME";
+        break
+        ;;
+      [Nn]*) echo "Skipping template editing." && break ;;
+      *) echo "Please answer yes or no." ;;
+    esac
+  done
+}
+
 test_by_id_prompt() {
   # Prompts the user to test campaign by passing an id with passing
   while true; do
-    read -rp "Do you need to test an existing assessment? (y/n) " yn
+    read -rp "Do you need to test an existing assessment? (yes/no) " yn
     case $yn in
       [Yy]*) read -rp "Enter the ASSESSMENT_ID to test: " id ASSESSMENT_ID="$id" && test_assessment && break ;;
       [Nn]*) echo "Skipping assessment testing.." && break ;;
@@ -230,7 +260,7 @@ test_by_id_prompt() {
 test_post_prompt() {
   # Prompts the user to ask if the new assessment test should be tested.
   while true; do
-    read -rp "Do you want to test the assessment? (y/n) " yn
+    read -rp "Do you want to test the assessment? (yes/no) " yn
     case $yn in
       [Yy]*)
         test_assessment
@@ -248,13 +278,13 @@ test_post_prompt() {
 #=============================
 complete_campaign() {
   # Run locally pca-gophish-composition/gophish-tools
-  ./$COMPLETE_CAMPAIGN_PATH "$CAMPAIGN_ID"
+  $COMPLETE_CAMPAIGN_PATH "$CAMPAIGN_ID"
 }
 
 complete_campaign_prompt() {
   # Prompts the user to ask to complete campaign for cleanup.
   while true; do
-    read -rp "Do you need to complete a previous campaign? (y/n) " yn
+    read -rp "Do you need to complete a previous campaign? (yes/no) " yn
     case $yn in
       [Yy]*) read -rp "Enter Campaign ID: " CAMPAIGN_ID CAMPAIGN_ID="$CAMPAIGN_ID" && complete_campaign && break ;;
       [Nn]*) echo "Skipping campaign completion and proceeding with setup. " && break ;;
@@ -266,7 +296,7 @@ complete_campaign_prompt() {
 create_or_manage_prompt() {
   # Prompts the user for setup or manage actions
   while true; do
-    read -rp "Do you want to manage an existing campaign or assessment? (y/n)" yn
+    read -rp "Do you want to manage an existing campaign or assessment? (yes/no)" yn
     case $yn in
       [Yy]*)
         # Campaign Cleanup Prompt
@@ -281,21 +311,21 @@ create_or_manage_prompt() {
   done
 }
 
+
 #===========================
 #       Entrypoint
 #===========================
+
 {
   output_dir_setup
-
-  # Logging Setup
   logging_setup
-  # exec >"$LOG_FILE" 2>&1
 
   echo "Beginning Li_PCA Setup Process."
 
   # Export/Complete Prompt
-  # TODO: Determine if we want to force complete campaigns and export
-  #export_by_id_prompt && complete_campaign_prompt
+  # TODO: Determine if we want to force complete campaigns and uncomment.
+
+  # Export_by_id_prompt && complete_campaign_prompt
   export_by_id_prompt
 
   # Template Prompt
@@ -305,7 +335,8 @@ create_or_manage_prompt() {
   create_assessment && import_assessment
 
   # Testing Prompt
-  test_post_prompt
+  # TODO: Determine if we want to prompt to test campaign and uncomment.
+  # test_post_prompt
 
   echo "Li_PCA Setup Process Complete!!"
   } || {
