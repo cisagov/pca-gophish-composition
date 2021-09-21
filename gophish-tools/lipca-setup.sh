@@ -17,7 +17,6 @@
 #
 # Documentation: https://github.com/cisagov/pca-runbooks/wiki/X:-Li-PCA-Infrastructure-Setup-(in-work)
 
-
 # BASE PATHS
 CISA_HOME="${CISA_HOME:-/home/cisa}"
 PCA_GOPHISH_COMP_ROOT_PATH="${PCA_GOPHISH_COMP_ROOT_PATH:-/var/pca/pca-gophish-composition}"
@@ -57,7 +56,6 @@ ASSESSMENT_ID=""
 TEMPLATE_EMAIL_FILENAME="${TEMPLATE_EMAIL_FILENAME:-template_email.json}"
 TEMPLATE_TARGETS_FILENAME="${TEMPLATE_TARGETS_FILENAME:-template_targets.csv}"
 
-
 #=============================
 #          UTILS
 #=============================
@@ -85,7 +83,6 @@ handle_error() {
   echo "Error during LiPCA Setup. Please see error output or logs at $LOG_PATH and try again."
 }
 
-
 #=============================
 #     TEMPLATE CREATION
 #=============================
@@ -94,14 +91,14 @@ create_target_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted csv file named "template_targets.csv" in the specified
   # directory and open vim to edit the template as needed for modification.
-  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && sudo vi /share/PCA/templates/template_targets.csv;
+  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && sudo vi /share/PCA/templates/template_targets.csv
 }
 
 create_email_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted json file named "template_email.json" file in the specified
   # directory and open vim to edit the template as needed for modification.
-  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && sudo vi /share/PCA/templates/template_email.json;
+  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && sudo vi /share/PCA/templates/template_email.json
 }
 
 email_template_prompt() {
@@ -137,7 +134,6 @@ target_template_prompt() {
     esac
   done
 }
-
 
 #=============================
 #     ASSESSMENT TOOLS
@@ -175,12 +171,10 @@ export_assessment() {
   "$EXPORT_ASSESSMENT_PATH" "$ASSESSMENT_ID"
 }
 
-
 test_assessment() {
   # Run test_assessment.sh script against the newly imported assessment
   "$TEST_ASSESSMENT_PATH" "$ASSESSMENT_ID"
 }
-
 
 export_by_id_prompt() {
   # Prompts the user to asking if assessment export is needed. Requires
@@ -190,13 +184,13 @@ export_by_id_prompt() {
       [Yy]*)
         read -rp "Enter the ASSESSMENT_ID to export data: " id
         ASSESSMENT_ID="$id"
-        export_assessment && exit ;;
+        export_assessment && exit
+        ;;
       [Nn]*) echo "Skipping assessment export.." && break ;;
       *) echo "Please specify the ASSESSMENT_ID." ;;
     esac
   done
 }
-
 
 export_prompt() {
   # Prompts the user to ask if assessment data export is required.
@@ -215,13 +209,12 @@ export_prompt() {
   done
 }
 
-
 edit_email_temp_prompt() {
   while true; do
     read -rp "Do you want to edit the created email template? (yes/no) " yn
     case $yn in
       [Yy]*)
-        sudo vi "$TEMPLATE_PATH/$TEMPLATE_EMAIL_FILENAME";
+        sudo vi "$TEMPLATE_PATH/$TEMPLATE_EMAIL_FILENAME"
         break
         ;;
       [Nn]*) echo "Skipping template editing." && break ;;
@@ -230,13 +223,12 @@ edit_email_temp_prompt() {
   done
 }
 
-
 edit_targets_temp_prompt() {
   while true; do
     read -rp "Do you want to edit the created targets template? (yes/no) " yn
     case $yn in
       [Yy]*)
-        sudo vi "$TEMPLATE_PATH/$TEMPLATE_TARGETS_FILENAME";
+        sudo vi "$TEMPLATE_PATH/$TEMPLATE_TARGETS_FILENAME"
         break
         ;;
       [Nn]*) echo "Skipping template editing." && break ;;
@@ -271,7 +263,6 @@ test_post_prompt() {
     esac
   done
 }
-
 
 #=============================
 #     COMPLETE CAMPAIGN
@@ -311,7 +302,6 @@ create_or_manage_prompt() {
   done
 }
 
-
 #===========================
 #       Entrypoint
 #===========================
@@ -339,7 +329,7 @@ create_or_manage_prompt() {
   # test_post_prompt
 
   echo "Li_PCA Setup Process Complete!!"
-  } || {
+} || {
   # Error Handling
   handle_error
 }
