@@ -64,7 +64,6 @@ TEMPLATE_TARGETS_FILENAME="${TEMPLATE_TARGETS_FILENAME:-template_targets.csv}"
 
 output_dir_setup() {
   # Setup /share subdirs and permissions for mapped volume data
-  # TODO: Determine ownership needs and setup here. Remove sudo if possible.
   sudo mkdir -p "$PCA_DEV_PATH"
   sudo mkdir -p "$PCA_OPS_PATH"
   sudo mkdir -p "$TEMPLATE_PATH"
@@ -81,7 +80,8 @@ logging_setup() {
 }
 
 handle_error() {
-  # Error output (TODO: enhance output and error handling)
+  # Error output
+  # TODO: enhance output and error handling)
   echo "Error during LiPCA Setup. Please see error output or logs at $LOG_PATH and try again."
 }
 
