@@ -91,14 +91,14 @@ create_target_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted csv file named "template_targets.csv" in the specified
   # directory and open vim to edit the template as needed for modification.
-  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && sudo vi /share/PCA/templates/template_targets.csv
+  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && sudo vi "$TEMPLATE_TARGETS_FILENAME"
 }
 
 create_email_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted json file named "template_email.json" file in the specified
   # directory and open vim to edit the template as needed for modification.
-  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && sudo vi /share/PCA/templates/template_email.json
+  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && sudo vi "$TEMPLATE_EMAIL_FILENAME"
 }
 
 email_template_prompt() {
