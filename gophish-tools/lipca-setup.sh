@@ -310,7 +310,7 @@ create_or_manage_prompt() {
   output_dir_setup
   logging_setup
 
-  echo "Beginning Li_PCA Setup Process."
+  echo "Beginning Li-PCA Setup Process."
 
   # Export/Complete Prompt
   # TODO: Determine if we want to force complete campaigns and uncomment.
