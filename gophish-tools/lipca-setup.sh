@@ -10,8 +10,8 @@
 # The benefit provided is removal of the legacy approach where manual user
 # interaction was required by the user to create template/import files and move
 # them to the correct path locations through various steps. This also removes
-# the need to remember various docker run commands for various images/scripts
-# and simplifying the flow of the gophish campaign interaction process.#
+# the need to remember various Docker run commands for various images/scripts
+# and simplifies the flow of the Gophish campaign interaction process.
 #
 # OVERRIDE DEFAULT VALUES WITH ENV VARS AS NEEDED
 #
