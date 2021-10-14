@@ -328,7 +328,7 @@ create_or_manage_prompt() {
   # TODO: Determine if we want to prompt to test campaign and uncomment.
   # test_post_prompt
 
-  echo "Li_PCA Setup Process Complete!!"
+  echo "Li-PCA Setup Process Complete!!"
 } || {
   # Error Handling
   handle_error
