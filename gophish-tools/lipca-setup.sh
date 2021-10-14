@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #============================
-#   Li-PCA Script Script
+#   Li-PCA Setup Script
 #============================
 # This setup/management script simplifies the creation/management of campaigns
 # in Gophish by orchestrating the flow of the capabilities derived from
