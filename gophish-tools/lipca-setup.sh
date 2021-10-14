@@ -4,7 +4,7 @@
 #   Li-PCA Script Script
 #============================
 # This setup/management script simplifies the creation/management of campaigns
-# in GoPhish by orchestrating the flow of the capabilities derived from
+# in Gophish by orchestrating the flow of the capabilities derived from
 # cisagov/gophish-tools project as well as other scripts within this project.
 #
 # The benefit provided is removal of the legacy approach where manual user
