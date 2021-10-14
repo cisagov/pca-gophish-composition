@@ -8,7 +8,7 @@
 # cisagov/gophish-tools project as well as other scripts within this project.
 #
 # The benefit provided is removal of the legacy approach where manual user
-# interaction was reqneed by the user to create template/import files and move
+# interaction was required by the user to create template/import files and move
 # them to the correct path locations through various steps. This also removes
 # the need to remember various docker run commands for various images/scripts
 # and simplifying the flow of the gophish campaign interaction process.#
