@@ -121,7 +121,7 @@ repos:
   - repo: https://github.com/ansible-community/ansible-lint
     # This is intentionally being held back because of issues in v5 per
     # https://github.com/cisagov/skeleton-ansible-role/issues/69
-    rev: v5.0.8
+    rev: v4.3.7
     hooks:
       - id: ansible-lint
       # files: molecule/default/playbook.yml
