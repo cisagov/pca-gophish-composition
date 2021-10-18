@@ -238,7 +238,7 @@ edit_targets_temp_prompt() {
 }
 
 test_by_id_prompt() {
-  # Prompts the user to test campaign by passing an id with passing
+  # Prompts the user for assessment id to test.
   while true; do
     read -rp "Do you need to test an existing assessment? (yes/no) " yn
     case $yn in
@@ -268,7 +268,6 @@ test_post_prompt() {
 #     COMPLETE CAMPAIGN
 #=============================
 complete_campaign() {
-  # Run locally pca-gophish-composition/gophish-tools
   $COMPLETE_CAMPAIGN_PATH "$CAMPAIGN_ID"
 }
 
@@ -290,7 +289,6 @@ create_or_manage_prompt() {
     read -rp "Do you want to manage an existing campaign or assessment? (yes/no)" yn
     case $yn in
       [Yy]*)
-        # Campaign Cleanup Prompt
         complete_campaign_prompt
         test_assessment
         test_prompt
