@@ -104,7 +104,6 @@ logging_setup() {
 
 handle_error() {
   # Error output
-  # TODO: enhance output and error handling)
   echo "Error during LiPCA Setup. Please see error output or logs at $LOG_PATH and try again."
 }
 
@@ -169,7 +168,6 @@ create_assessment() {
   read -rp 'Enter assessment id/name for new assessment: ' id
   read -rp 'Enter level of the new assessment (1-6): ' level
 
-  # TODO: Determine if we want to keep mix of underscores and hypens in level naming.
   ASSESSMENT_NAME="$id"_level-"$level"
   FULL_ASSESSMENT_PATH="$ASSESSMENT_PATH/$ASSESSMENT_NAME"
 
@@ -333,7 +331,6 @@ create_or_manage_prompt() {
   echo "Beginning Li-PCA Setup Process."
 
   # Export/Complete Prompt
-  # TODO: Determine if we want to force complete campaigns and uncomment.
 
   # Export_by_id_prompt && complete_campaign_prompt
   export_by_id_prompt
@@ -345,8 +342,7 @@ create_or_manage_prompt() {
   create_assessment && import_assessment
 
   # Testing Prompt
-  # TODO: Determine if we want to prompt to test campaign and uncomment.
-  # test_post_prompt
+  test_post_prompt
 
   echo "Li-PCA Setup Process Complete!!"
 } || {
