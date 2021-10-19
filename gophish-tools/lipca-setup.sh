@@ -73,6 +73,10 @@ ASSESSMENT_ID=""
 TEMPLATE_EMAIL_FILENAME="${TEMPLATE_EMAIL_FILENAME:-template_email.json}"
 TEMPLATE_TARGETS_FILENAME="${TEMPLATE_TARGETS_FILENAME:-template_targets.csv}"
 
+# PERMISSIONS
+SHARE_USER_NAME="${SHARE_USER_NAME:-vnc}"
+SHARE_GROUP_NAME="${SHARE_GROUP_NAME:-gophish}"
+
 #=============================
 #          UTILS
 #=============================
@@ -86,7 +90,7 @@ output_dir_setup() {
   sudo mkdir -p "$EXPORT_PATH"
   sudo mkdir -p "$LOG_PATH"
   sudo chmod --recursive 775 "$EFS_SHARE"
-  sudo chown -R vnc:gophish "$EFS_SHARE"
+  sudo chown -R "$SHARE_USER_NAME":"$SHARE_GROUP_NAME" "$EFS_SHARE"
 }
 
 logging_setup() {
