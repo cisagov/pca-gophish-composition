@@ -189,7 +189,7 @@ import_assessment() {
 
 export_assessment() {
   # Runs the export-assessment.sh script to export the generated assessment
-  # data in the lipca-temp dir (generated from create_assessment)
+  # data to the lipca-temp dir (generated from create_assessment)
   "$EXPORT_ASSESSMENT_PATH" "$ASSESSMENT_ID"
 }
 
