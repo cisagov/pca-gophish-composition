@@ -173,7 +173,7 @@ create_assessment() {
   ASSESSMENT_NAME="$id"_level-"$level"
   FULL_ASSESSMENT_PATH="$ASSESSMENT_PATH/$ASSESSMENT_NAME"
 
-  # Copy templates for injestion
+  # Copy templates for ingestion
   echo "Copying template files named template_* for use in setup process."
   sudo cp /share/PCA/templates/template_* "$TEMPLATE_INGESTION_PATH"
   echo "Templates copied to: $TEMPLATE_INGESTION_PATH"
