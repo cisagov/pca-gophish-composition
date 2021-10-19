@@ -34,6 +34,10 @@
 #
 # Documentation: https://github.com/cisagov/pca-runbooks/wiki/X:-Li-PCA-Infrastructure-Setup-(in-work)
 
+set -o nounset
+set -o errexit
+set -o pipefail
+
 # BASE PATHS
 CISA_HOME="${CISA_HOME:-/home/cisa}"
 PCA_GOPHISH_COMP_ROOT_PATH="${PCA_GOPHISH_COMP_ROOT_PATH:-/var/pca/pca-gophish-composition}"
