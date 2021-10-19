@@ -137,7 +137,7 @@ target_template_prompt() {
   # Prompt user and ask if template generation is needed.
   while true; do
     # Input R
-    read -rp "Do you need an targets template file generated? (yes/no) " yn
+    read -rp "Do you need a targets template file generated? (yes/no) " yn
     case $yn in
       [Yy]*)
         create_target_template
