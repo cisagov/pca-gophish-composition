@@ -13,7 +13,24 @@
 # the need to remember various Docker run commands for various images/scripts
 # and simplifies the flow of the Gophish campaign interaction process.
 #
-# OVERRIDE DEFAULT VALUES WITH ENV VARS AS NEEDED
+# The Constants below in ALL_CAPS follow this format: ${ENV_VAR:-default_value}
+#
+# This method provides flexibilty in deployments by allowing these values to
+# easily be modified or customized for certain environments without the need
+# for additional code changes. If this proves to not add value or increases
+# complexity, it should be modified or removed.
+#
+# No environment variables or overrides are required to run this project as it
+# was originally intended with the default values set. This is simply for customization
+# if needed.
+#
+# If customization or modifications are needed, an example of how to use environment
+# variable overrides is to define a new value to an environment variable matching
+# the name of the respective value you would like to override. Using the example
+# above ${ENV_VAR:-default_value}, it's possible to define ENV_VAR="new_value"
+# in the target environment and "new_value" would be assigned instead of the initially
+# defined "default_value". (Example: run export ENV_VAR="new_value")
+#
 #
 # Documentation: https://github.com/cisagov/pca-runbooks/wiki/X:-Li-PCA-Infrastructure-Setup-(in-work)
 
