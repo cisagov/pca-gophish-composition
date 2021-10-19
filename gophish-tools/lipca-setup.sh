@@ -63,7 +63,7 @@ LOG_FILE="${PCA_LOG_FILE:-$LOG_PATH/log-$(date +'%m-%d-%Y_%H-%M-%S')}"
 # DEV PATH SETUP
 TEMPLATE_PATH="${PCA_TEMPLATE_PATH:-$PCA_OPS_PATH/templates}"
 EXPORT_PATH="${PCA_EXPORT_PATH:-$PCA_OPS_PATH/exports}"
-TEMPLATE_INJESTION_PATH="${TEMPLATE_INJESTION_PATH:-$ASSESSMENT_PATH}"
+TEMPLATE_INGESTION_PATH="${TEMPLATE_INGESTION_PATH:-$ASSESSMENT_PATH}"
 
 # ASSESSMENT PLACEHOLDERS
 ASSESSMENT_NAME="${PCA_ASSESSMENT_NAME:-assessment-$(date +'%m-%d-%Y_%H-%M-%S')}"
@@ -157,8 +157,7 @@ target_template_prompt() {
 #=============================
 
 create_assessment() {
-  # Runs the pca-wizard tool to setup a new campaign generate and saves the
-  # output json to the lipca-temp directory for importing
+  # Runs the pca-wizard tool to setup a new campaign
   read -rp 'Enter assessment id/name for new assessment: ' id
   read -rp 'Enter level of the new assessment (1-6): ' level
 
@@ -168,8 +167,8 @@ create_assessment() {
 
   # Copy templates for injestion
   echo "Copying template files named template_* for use in setup process."
-  sudo cp /share/PCA/templates/template_* "$TEMPLATE_INJESTION_PATH"
-  echo "Templates copied to: $TEMPLATE_INJESTION_PATH"
+  sudo cp /share/PCA/templates/template_* "$TEMPLATE_INGESTION_PATH"
+  echo "Templates copied to: $TEMPLATE_INGESTION_PATH"
 
   # Run using docker gophish-tools image pca-wizard
   sudo docker run -it --rm --workdir="$CISA_HOME" -v "$ASSESSMENT_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$WIZARD_ALIAS" "$ASSESSMENT_NAME"
@@ -194,7 +193,7 @@ test_assessment() {
 }
 
 export_by_id_prompt() {
-  # Prompts the user to asking if assessment export is needed. Requires
+  # Prompts the user for the target ASSESSMENT_ID to be exported.
   while true; do
     read -rp "Would you like to export data from an existing completed assessment? (yes/no) " yn
     case $yn in
@@ -210,13 +209,11 @@ export_by_id_prompt() {
 }
 
 export_prompt() {
-  # Prompts the user to ask if assessment data export is required.
+  # Prompts the user to ask if the target action is to export data.
   while true; do
     read -rp "Do you want to export data from an existing completed assessment? (yes/no) " yn
     case $yn in
       [Yy]*)
-        # test_assessment
-        #export_by_id_prompt()
         export_assessment
         break
         ;;
