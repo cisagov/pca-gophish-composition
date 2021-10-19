@@ -2,6 +2,9 @@
 # Files already tracked by Git are not affected.
 # See: https://git-scm.com/docs/gitignore
 
+## Project Specific ##
+**/lipca-temp
+
 ## Python ##
 __pycache__
 .coverage
@@ -9,4 +12,3 @@ __pycache__
 .pytest_cache
 .python-version
 *.egg-info
-**/lipca-temp
