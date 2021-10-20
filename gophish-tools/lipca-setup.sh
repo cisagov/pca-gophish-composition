@@ -87,14 +87,14 @@ SHARE_GROUP_NAME="${SHARE_GROUP_NAME:-gophish}"
 
 output_dir_setup() {
   # Setup /share subdirs and permissions for mapped volume data
-  sudo mkdir -p "$PCA_DEV_PATH"
-  sudo mkdir -p "$PCA_OPS_PATH"
-  sudo mkdir -p "$TEMPLATE_PATH"
-  sudo mkdir -p "$ASSESSMENT_PATH"
-  sudo mkdir -p "$EXPORT_PATH"
-  sudo mkdir -p "$LOG_PATH"
-  sudo chmod --recursive 775 "$EFS_SHARE"
-  sudo chown -R "$SHARE_USER_NAME":"$SHARE_GROUP_NAME" "$EFS_SHARE"
+  mkdir -p "$PCA_DEV_PATH"
+  mkdir -p "$PCA_OPS_PATH"
+  mkdir -p "$TEMPLATE_PATH"
+  mkdir -p "$ASSESSMENT_PATH"
+  mkdir -p "$EXPORT_PATH"
+  mkdir -p "$LOG_PATH"
+  chmod --recursive 775 "$EFS_SHARE"
+  chown -R "$SHARE_USER_NAME":"$SHARE_GROUP_NAME" "$EFS_SHARE"
 }
 
 logging_setup() {
@@ -115,14 +115,14 @@ create_target_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted csv file named "template_targets.csv" in the specified
   # directory and open vim to edit the template as needed for modification.
-  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && sudo vi "$TEMPLATE_TARGETS_FILENAME"
+  docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && vi "$TEMPLATE_TARGETS_FILENAME"
 }
 
 create_email_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted json file named "template_email.json" file in the specified
   # directory and open vim to edit the template as needed for modification.
-  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && sudo vi "$TEMPLATE_EMAIL_FILENAME"
+  docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && vi "$TEMPLATE_EMAIL_FILENAME"
 }
 
 email_template_prompt() {
@@ -173,11 +173,11 @@ create_assessment() {
 
   # Copy templates for ingestion
   echo "Copying template files named template_* for use in setup process."
-  sudo cp /share/PCA/templates/template_* "$TEMPLATE_INGESTION_PATH"
+  cp /share/PCA/templates/template_* "$TEMPLATE_INGESTION_PATH"
   echo "Templates copied to: $TEMPLATE_INGESTION_PATH"
 
   # Run using docker gophish-tools image pca-wizard
-  sudo docker run -it --rm --workdir="$CISA_HOME" -v "$ASSESSMENT_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$WIZARD_ALIAS" "$ASSESSMENT_NAME"
+  docker run -it --rm --workdir="$CISA_HOME" -v "$ASSESSMENT_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$WIZARD_ALIAS" "$ASSESSMENT_NAME"
   echo "Saved Assessment: $FULL_ASSESSMENT_PATH"
 }
 
@@ -234,7 +234,7 @@ edit_email_temp_prompt() {
     read -rp "Do you want to edit the created email template? (yes/no) " yn
     case $yn in
       [Yy]*)
-        sudo vi "$TEMPLATE_PATH/$TEMPLATE_EMAIL_FILENAME"
+        vi "$TEMPLATE_PATH/$TEMPLATE_EMAIL_FILENAME"
         break
         ;;
       [Nn]*) echo "Skipping template editing." && break ;;
@@ -248,7 +248,7 @@ edit_targets_temp_prompt() {
     read -rp "Do you want to edit the created targets template? (yes/no) " yn
     case $yn in
       [Yy]*)
-        sudo vi "$TEMPLATE_PATH/$TEMPLATE_TARGETS_FILENAME"
+        vi "$TEMPLATE_PATH/$TEMPLATE_TARGETS_FILENAME"
         break
         ;;
       [Nn]*) echo "Skipping template editing." && break ;;
