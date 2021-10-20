@@ -13,7 +13,7 @@
 # the need to remember various Docker run commands for various images/scripts
 # and simplifies the flow of the Gophish campaign interaction process.
 #
-# The Constants below in ALL_CAPS follow this format: ${ENV_VAR:-default_value}
+# The constants below in ALL_CAPS follow this format: ${ENV_VAR:-default_value}
 #
 # This method provides flexibilty in deployments by allowing these values to
 # easily be modified or customized for certain environments without the need
