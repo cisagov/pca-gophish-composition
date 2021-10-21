@@ -121,7 +121,7 @@ create_target_template() {
 create_email_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted json file named "template_email.json" file in the specified
-  # directory and open vim to edit the template as needed for modification.
+  # directory and opens vim to edit the template as needed for modification.
   docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -e && vi "$TEMPLATE_EMAIL_FILENAME"
 }
 
