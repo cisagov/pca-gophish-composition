@@ -114,7 +114,7 @@ handle_error() {
 create_target_template() {
   # Runs pca-wizard-templates tool in gophish-tools container and outputs
   # a pre-formatted csv file named "template_targets.csv" in the specified
-  # directory and open vim to edit the template as needed for modification.
+  # directory and opens vim to edit the template as needed for modification.
   docker run -it --rm --workdir="$CISA_HOME" -v "$TEMPLATE_PATH":"$CISA_HOME":Z "$TOOLS_IMAGE_NAME" "$TEMPLATE_ALIAS" -t && vi "$TEMPLATE_TARGETS_FILENAME"
 }
 
