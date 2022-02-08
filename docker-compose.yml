@@ -69,12 +69,12 @@ services:
       # the default network subnet defined below.
       - RELAY_IP=172.16.202.0/24
     ports:
-      - target: "25"
-        published: "1025"
+      - target: 25
+        published: 1025
         protocol: tcp
         mode: host
-      - target: "587"
-        published: "1587"
+      - target: 587
+        published: 1587
         protocol: tcp
         mode: host
     secrets:
