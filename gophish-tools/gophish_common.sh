@@ -12,7 +12,7 @@ GOPHISH_URL="https://gophish:3333"
 
 function get_gophish_api_key {
   # Fetch GoPhish API key
-  API_KEY=$(docker-compose -f "$GOPHISH_COMPOSITION" exec -T gophish get-api-key)
+  API_KEY=$(docker compose -f "$GOPHISH_COMPOSITION" exec -T gophish get-api-key)
   api_key_rc="$?"
   if [ "$api_key_rc" -ne 0 ]; then
     echo "ERROR: Failed to obtain GoPhish API key from Docker composition."

@@ -14,7 +14,7 @@ Creates a Docker composition containing instances of:
 A sample [docker composition](docker-compose.yml) is included
 in this repository.
 
-To start the composition use the command: `docker-compose up`
+To start the composition use the command: `docker compose up`
 
 It's normal for the `gophish-tools` container to exit shortly after startup;
 it is included in this composition as a convenience for phishing operators.

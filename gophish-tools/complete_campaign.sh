@@ -22,14 +22,14 @@ source "$SCRIPTS_DIR/gophish_common.sh"
 CAMPAIGN_ID=$1
 
 # Disable errexit to allow error-handling within get_gophish_api_key
-# and for the subsequent docker-compose call to gophish-complete
+# and for the subsequent docker compose call to gophish-complete
 set +o errexit
 
 # Fetch GoPhish API key
 API_KEY=$(get_gophish_api_key)
 
 # Run gophish-complete in the Docker composition
-docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
+docker compose -f "$GOPHISH_COMPOSITION" run --rm \
   gophish-tools gophish-complete "--campaign=$CAMPAIGN_ID" \
   "$GOPHISH_URL" "$API_KEY"
 complete_rc="$?"

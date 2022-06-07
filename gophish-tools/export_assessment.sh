@@ -24,14 +24,14 @@ ASSESSMENT_ID=$1
 GOPHISH_WRITABLE_DIR="/var/pca/pca-gophish-composition/data"
 
 # Disable errexit to allow error-handling within get_gophish_api_key
-# and for the subsequent docker-compose call to gophish-export
+# and for the subsequent docker compose call to gophish-export
 set +o errexit
 
 # Fetch GoPhish API key
 API_KEY=$(get_gophish_api_key)
 
 # Run gophish-export in the Docker composition
-docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
+docker compose -f "$GOPHISH_COMPOSITION" run --rm \
   --volume "$GOPHISH_WRITABLE_DIR":/home/cisa \
   gophish-tools gophish-export "$ASSESSMENT_ID" "$GOPHISH_URL" "$API_KEY"
 export_rc="$?"
