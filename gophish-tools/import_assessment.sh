@@ -24,14 +24,14 @@ ASSESSMENT_FILE_BASE=$(basename "$ASSESSMENT_FILE")
 ASSESSMENT_FILE_DIR=$(readlink -f "$ASSESSMENT_FILE" | xargs dirname)
 
 # Disable errexit to allow error-handling within get_gophish_api_key
-# and for the subsequent docker-compose call to gophish-import
+# and for the subsequent docker compose call to gophish-import
 set +o errexit
 
 # Fetch GoPhish API key
 API_KEY=$(get_gophish_api_key)
 
 # Run gophish-import in the Docker composition
-docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
+docker compose -f "$GOPHISH_COMPOSITION" run --rm \
   --volume "$ASSESSMENT_FILE_DIR":/home/cisa gophish-tools \
   gophish-import "$ASSESSMENT_FILE_BASE" "$GOPHISH_URL" "$API_KEY"
 import_rc="$?"
