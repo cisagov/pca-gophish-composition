@@ -1,6 +1,9 @@
 # pca-gophish-composition 🎣🐷📮🐳 #
 
 [![GitHub Build Status](https://github.com/cisagov/pca-gophish-composition/workflows/build/badge.svg)](https://github.com/cisagov/pca-gophish-composition/actions)
+[![CodeQL](https://github.com/cisagov/pca-gophish-composition/workflows/CodeQL/badge.svg)](https://github.com/cisagov/pca-gophish-composition/actions/workflows/codeql-analysis.yml)
+[![Coverage Status](https://coveralls.io/repos/github/cisagov/pca-gophish-composition/badge.svg?branch=develop)](https://coveralls.io/github/cisagov/pca-gophish-composition?branch=develop)
+[![Known Vulnerabilities](https://snyk.io/test/github/cisagov/pca-gophish-composition/develop/badge.svg)](https://snyk.io/test/github/cisagov/pca-gophish-composition)
 
 Creates a Docker composition containing instances of:
 
