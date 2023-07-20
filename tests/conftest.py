@@ -4,34 +4,43 @@ https://docs.pytest.org/en/latest/writing_plugins.html#conftest-py-plugins
 """
 # Third-Party Libraries
 import pytest
+from python_on_whales import docker
+
+
+@pytest.fixture(scope="session")
+def dockerc():
+    """Start up the Docker composition."""
+    docker.compose.up(detach=True)
+    yield docker
+    docker.compose.down()
 
 
 @pytest.fixture(scope="session")
 def gophish_container(dockerc):
-    """Return the gophish container from the docker composition."""
+    """Return the gophish container from the Docker composition."""
     # find the container by name even if it is stopped already
-    return dockerc.containers(service_names=["gophish"], stopped=True)[0]
+    return dockerc.compose.ps(services=["gophish"], all=True)[0]
 
 
 @pytest.fixture(scope="session")
 def gophish_tools_container(dockerc):
-    """Return the gophish-tools container from the docker composition."""
+    """Return the gophish-tools container from the Docker composition."""
     # find the container by name even if it is stopped already
-    return dockerc.containers(service_names=["gophish-tools"], stopped=True)[0]
+    return dockerc.compose.ps(services=["gophish-tools"], all=True)[0]
 
 
 @pytest.fixture(scope="session")
 def postfix_container(dockerc):
-    """Return the postfix container from the docker composition."""
+    """Return the postfix container from the Docker composition."""
     # find the container by name even if it is stopped already
-    return dockerc.containers(service_names=["postfix"], stopped=True)[0]
+    return dockerc.compose.ps(services=["postfix"], all=True)[0]
 
 
 @pytest.fixture(scope="session")
 def mailhog_container(dockerc):
-    """Return the mailhog container from the docker composition."""
+    """Return the mailhog container from the Docker composition."""
     # find the container by name even if it is stopped already
-    return dockerc.containers(service_names=["mailhog"], stopped=True)[0]
+    return dockerc.compose.ps(services=["mailhog"], all=True)[0]
 
 
 def pytest_addoption(parser):

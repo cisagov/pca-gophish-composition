@@ -104,7 +104,7 @@ setup(
             "pre-commit",
             "pytest",
             "pytest-cov",
-            "pytest-dockerc",
+            "python-on-whales",
         ]
     },
     # Conveniently allows one to run the CLI tool as `gophish-init`
