@@ -155,15 +155,11 @@ jobs:
         os:
           - ubuntu-latest
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
-        include:
-          - os: ubuntu-20.04
-            python-version: "3.6"
     steps:
       - id: harden-runner
         name: Harden the runner
@@ -264,15 +260,11 @@ jobs:
         os:
           - ubuntu-latest
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
-        include:
-          - os: ubuntu-20.04
-            python-version: "3.6"
     steps:
       - id: harden-runner
         name: Harden the runner
@@ -324,15 +316,11 @@ jobs:
         os:
           - ubuntu-latest
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
-        include:
-          - os: ubuntu-20.04
-            python-version: "3.6"
     steps:
       - id: harden-runner
         name: Harden the runner
