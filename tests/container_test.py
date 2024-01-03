@@ -15,7 +15,7 @@ def test_container_count(dockerc):
     """Verify the test composition and container."""
     # stopped parameter allows non-running containers in results
     assert (
-        len(dockerc.containers(stopped=True)) == 4
+        len(dockerc.compose.ps(all=True)) == 4
     ), "Wrong number of containers were started."
 
 
@@ -24,7 +24,7 @@ def test_successful_exit_gophish_tools(gophish_tools_container):
     SUCCESSFUL_EXIT = 0
     TIMEOUT = 10
     for i in range(TIMEOUT):
-        if gophish_tools_container.exit_code == SUCCESSFUL_EXIT:
+        if gophish_tools_container.state.exit_code == SUCCESSFUL_EXIT:
             break
         time.sleep(1)
     else:
@@ -39,7 +39,7 @@ def test_wait_for_ready_gophish(gophish_container):
     TIMEOUT = 10
     ready_message = READY_MESSAGES["gophish"]
     for i in range(TIMEOUT):
-        if ready_message in gophish_container.logs().decode("utf-8"):
+        if ready_message in gophish_container.logs():
             break
         time.sleep(1)
     else:
@@ -54,7 +54,7 @@ def test_wait_for_ready_postfix(postfix_container):
     TIMEOUT = 10
     ready_message = READY_MESSAGES["postfix"]
     for i in range(TIMEOUT):
-        if ready_message in postfix_container.logs().decode("utf-8"):
+        if ready_message in postfix_container.logs():
             break
         time.sleep(1)
     else:
@@ -69,7 +69,7 @@ def test_wait_for_ready_mailhog(mailhog_container):
     TIMEOUT = 10
     ready_message = READY_MESSAGES["mailhog"]
     for i in range(TIMEOUT):
-        if ready_message in mailhog_container.logs().decode("utf-8"):
+        if ready_message in mailhog_container.logs():
             break
         time.sleep(1)
     else:

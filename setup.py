@@ -75,12 +75,15 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        # gophish-tools cannot support Python 3.12 until the gophish
+        # Python package supports a newer version of the urllib3
+        # library.  The reason is identical to what is discussed here:
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
+        # "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     # What does your project relate to?
@@ -103,7 +106,7 @@ setup(
             "pre-commit",
             "pytest",
             "pytest-cov",
-            "pytest-dockerc",
+            "python-on-whales",
         ]
     },
     # Conveniently allows one to run the CLI tool as `gophish-init`
