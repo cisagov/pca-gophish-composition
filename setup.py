@@ -42,7 +42,7 @@ def get_version(version_file):
 
 
 setup(
-    name="gophish_init",
+    name="gophish-init",
     # Versions should comply with PEP440
     version=get_version("src/gophish_init/_version.py"),
     description="GoPhish initialization library",
@@ -87,7 +87,7 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     # What does your project relate to?
-    keywords="gophish_init",
+    keywords="gophish-init",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
