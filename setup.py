@@ -93,7 +93,13 @@ setup(
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
-    install_requires=["docopt", "gophish", "setuptools >= 24.2.0"],
+    # gophish requires six==1.15.0, whereas setuptools>=71 requires
+    # six==1.16.0.  The installation of setuptools>=71 ends up being a problem
+    # when attempting to reinstall this package, since then setuptools cannot
+    # be imported.  This is precisely what happens during idempotence testing
+    # of cisagov/ansible-role-pca-gophish-composition, so we must insist that
+    # only setuptools<71 is installed.
+    install_requires=["docopt", "gophish", "setuptools >=24.2.0,<71"],
     extras_require={
         "test": [
             "coverage",
