@@ -99,7 +99,7 @@ setup(
     # be imported.  This is precisely what happens during idempotence testing
     # of cisagov/ansible-role-pca-gophish-composition, so we must insist that
     # only setuptools<71 is installed.
-    install_requires=["docopt", "gophish", "setuptools >=24.2.0,<71"],
+    install_requires=["docopt", "gophish", "setuptools >=24.2.0,<75"],
     extras_require={
         "test": [
             "coverage",
