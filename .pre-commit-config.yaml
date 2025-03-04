@@ -169,6 +169,30 @@ repos:
     hooks:
       - id: pip-audit
         args:
+          # We have to ignore these particular vulnerabilities because
+          # gophish/gophish is so out of date and therefore pulls in
+          # ancient versions of its dependencies.
+          #
+          # TODO: The addition of these ignore directives should be
+          # reverted when possible.  See #64 for more details.
+          - --ignore-vuln
+          - GHSA-34jh-p97f-mpxf
+          - --ignore-vuln
+          - GHSA-9wx4-h78v-vm56
+          - --ignore-vuln
+          - PYSEC-2021-108
+          - --ignore-vuln
+          - PYSEC-2022-42986
+          - --ignore-vuln
+          - PYSEC-2023-74
+          - --ignore-vuln
+          - PYSEC-2023-135
+          - --ignore-vuln
+          - PYSEC-2023-192
+          - --ignore-vuln
+          - PYSEC-2023-212
+          - --ignore-vuln
+          - PYSEC-2024-60
           # Add any pip requirements files to scan
           - --requirement
           - requirements-dev.txt
