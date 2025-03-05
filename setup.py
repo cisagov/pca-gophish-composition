@@ -75,18 +75,19 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
-        # gophish-tools cannot support Python 3.12 until the gophish
-        # Python package supports a newer version of the urllib3
-        # library.  The reason is identical to what is discussed here:
+        # gophish-tools cannot support Python 3.12 or later until the
+        # gophish Python package supports a newer version of the
+        # urllib3 library.  The reason is identical to what is
+        # discussed here:
         # https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
         # "Programming Language :: Python :: 3.12",
+        # "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     # What does your project relate to?
     keywords="gophish-init",
     packages=find_packages(where="src"),
@@ -99,22 +100,26 @@ setup(
     # be imported.  This is precisely what happens during idempotence testing
     # of cisagov/ansible-role-pca-gophish-composition, so we must insist that
     # only setuptools<71 is installed.
-    install_requires=["docopt", "gophish", "setuptools >=24.2.0,<71"],
+    install_requires=["docopt", "gophish", "setuptools<71"],
     extras_require={
+        # IMPORTANT: Keep type hinting-related dependencies of the dev section
+        # in sync with the mypy pre-commit hook configuration (see
+        # .pre-commit-config.yaml). Any changes to type hinting-related
+        # dependencies here should be reflected in the additional_dependencies
+        # field of the mypy pre-commit hook to avoid discrepancies in type
+        # checking between environments.
+        "dev": [
+            "types-docopt",
+            "types-setuptools",
+        ],
         "test": [
             "coverage",
-            # coveralls 1.11.0 added a service number for calls from
-            # GitHub Actions. This caused a regression which resulted in a 422
-            # response from the coveralls API with the message:
-            # Unprocessable Entity for url: https://coveralls.io/api/v1/jobs
-            # 1.11.1 fixed this issue, but to ensure expected behavior we'll pin
-            # to never grab the regression version.
-            "coveralls != 1.11.0",
+            "coveralls",
             "pre-commit",
             "pytest",
             "pytest-cov",
             "python-on-whales",
-        ]
+        ],
     },
     # Conveniently allows one to run the CLI tool as `gophish-init`
     entry_points={"console_scripts": ["gophish-init = gophish_init.gophish_init:main"]},
