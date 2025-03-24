@@ -99,8 +99,8 @@ setup(
     # when attempting to reinstall this package, since then setuptools cannot
     # be imported.  This is precisely what happens during idempotence testing
     # of cisagov/ansible-role-pca-gophish-composition, so we must insist that
-    # only setuptools<71 is installed.
-    install_requires=["docopt", "gophish", "setuptools<71"],
+    # only setuptools<79 is installed.
+    install_requires=["docopt", "gophish", "setuptools<79"],
     extras_require={
         # IMPORTANT: Keep type hinting-related dependencies of the dev section
         # in sync with the mypy pre-commit hook configuration (see
