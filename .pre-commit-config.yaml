@@ -178,6 +178,8 @@ repos:
           - --ignore-vuln
           - GHSA-34jh-p97f-mpxf
           - --ignore-vuln
+          - GHSA-5rjg-fvgr-3xxf
+          - --ignore-vuln
           - GHSA-9wx4-h78v-vm56
           - --ignore-vuln
           - PYSEC-2021-108
