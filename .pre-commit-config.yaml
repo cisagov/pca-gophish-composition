@@ -180,7 +180,11 @@ repos:
           - --ignore-vuln
           - GHSA-5rjg-fvgr-3xxf
           - --ignore-vuln
+          - GHSA-9hjg-9r4m-mvj7
+          - --ignore-vuln
           - GHSA-9wx4-h78v-vm56
+          - --ignore-vuln
+          - GHSA-pq67-6m6q-mj2v
           - --ignore-vuln
           - PYSEC-2021-108
           - --ignore-vuln
@@ -209,7 +213,7 @@ repos:
 
   # Ansible hooks
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.1.3
+    rev: v25.4.0
     hooks:
       - id: ansible-lint
         additional_dependencies:
