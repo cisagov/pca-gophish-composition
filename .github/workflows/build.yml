@@ -220,10 +220,16 @@ jobs:
         # We test on all of the latest platforms available to use with GitHub-
         # hosted runners for public repositories.
         platform:
-          - macos-latest
-          - ubuntu-24.04-arm
+          # TODO: Re-enable support for macOS when that becomes
+          # possible.  See #72 for more details.
+          # - macos-latest
+          # TODO: Re-enable support for Ubuntu ARM64 when that becomes
+          # possible.  See #72 for more details.
+          # - ubuntu-24.04-arm
           - ubuntu-latest
-          - windows-latest
+          # TODO: Re-enable support for Windows when that becomes
+          # possible.  See #72 for more details.
+          # - windows-latest
         python-version:
           - "3.9"
           - "3.10"
@@ -447,10 +453,16 @@ jobs:
         # We test on all of the latest platforms available to use with GitHub-
         # hosted runners for public repositories.
         platform:
-          - macos-latest
-          - ubuntu-24.04-arm
+          # TODO: Re-enable support for macOS when that becomes
+          # possible.  See #72 for more details.
+          # - macos-latest
+          # TODO: Re-enable support for Ubuntu ARM64 when that becomes
+          # possible.  See #72 for more details.
+          # - ubuntu-24.04-arm
           - ubuntu-latest
-          - windows-latest
+          # TODO: Re-enable support for Windows when that becomes
+          # possible.  See #72 for more details.
+          # - windows-latest
         python-version:
           - "3.9"
           - "3.10"
