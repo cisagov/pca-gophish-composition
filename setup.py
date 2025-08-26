@@ -87,7 +87,10 @@ setup(
         # "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
-    python_requires=">=3.9",
+    # On Python 3.12 and later the version of urllib3 required by
+    # gophish fails to import with:
+    # ModuleNotFoundError: No module named 'urllib3.packages.six.moves'
+    python_requires=">=3.9,<3.12",
     # What does your project relate to?
     keywords="gophish-init",
     packages=find_packages(where="src"),
