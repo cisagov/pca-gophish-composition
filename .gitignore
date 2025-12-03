@@ -12,4 +12,5 @@ __pycache__
 .pytest_cache
 .python-version
 *.egg-info
+build
 dist
