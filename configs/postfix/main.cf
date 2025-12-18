@@ -1,0 +1,18 @@
+# Podstawowa tożsamość
+myhostname = mail.test.email.local
+mydomain = test.email.local
+myorigin = $mydomain
+
+# Sieci zaufane (musi obejmować podsieć Dockera)
+mynetworks = 127.0.0.0/8, 172.16.202.0/24
+
+# Konfiguracja Relay i Transportu
+# Wyłączamy relayhost dla domeny lokalnej, używamy transport_maps
+relayhost = 
+transport_maps = hash:/etc/postfix/transport
+
+# Domeny, dla których poczta jest akceptowana
+relay_domains = $mydestination, test.email.local
+
+# Kompatybilność
+compatibility_level = 2
