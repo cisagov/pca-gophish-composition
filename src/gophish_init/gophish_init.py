@@ -52,7 +52,7 @@ def create_send_profile(api, name, host, from_address):
 
 def configure(api_key, url):
     """Configure gophish using the supplied api key."""
-    logging.debug(f"Using API key: {api_key}")
+    logging.debug("Using provided API key.")
     logging.debug(f"Connecting to: {url}")
     api = Gophish(api_key, host=url, verify=False)
     logging.debug("Fetching sending profile names.")
