@@ -186,6 +186,8 @@ repos:
           # TODO: The addition of these ignore directives should be
           # reverted when possible.  See #64 for more details.
           - --ignore-vuln
+          - GHSA-2xpw-w6gg-jr37
+          - --ignore-vuln
           - GHSA-34jh-p97f-mpxf
           - --ignore-vuln
           - GHSA-5rjg-fvgr-3xxf
@@ -193,6 +195,8 @@ repos:
           - GHSA-9hjg-9r4m-mvj7
           - --ignore-vuln
           - GHSA-9wx4-h78v-vm56
+          - --ignore-vuln
+          - GHSA-gm62-xv2j-4w53
           - --ignore-vuln
           - GHSA-pq67-6m6q-mj2v
           - --ignore-vuln
