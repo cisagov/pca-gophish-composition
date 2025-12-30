@@ -39,25 +39,25 @@ SENDING_PROFILES = [
 
 def create_send_profile(api, name, host, from_address):
     """Create a new sending profile."""
-    logging.info("Creating new sending profile named: {}".format(name))
+    logging.info(f"Creating new sending profile named: {name}")
     smtp = SMTP(name=name)
     smtp.host = host
     smtp.from_address = from_address
     smtp.interface_type = "SMTP"
     smtp.ignore_cert_errors = True
     smtp = api.smtp.post(smtp)
-    logging.debug("New sending profile has id: {}".format(smtp.id))
+    logging.debug(f"New sending profile has id: {smtp.id}")
     return smtp
 
 
 def configure(api_key, url):
     """Configure gophish using the supplied api key."""
-    logging.debug("Using API key: {}".format(api_key))
-    logging.debug("Connecting to: {}".format(url))
+    logging.debug(f"Using API key: {api_key}")
+    logging.debug(f"Connecting to: {url}")
     api = Gophish(api_key, host=url, verify=False)
     logging.debug("Fetching sending profile names.")
     existing_names = {smtp.name for smtp in api.smtp.get()}
-    logging.debug("Found: {}".format(existing_names))
+    logging.debug(f"Found: {existing_names}")
     for profile in SENDING_PROFILES:
         if profile["name"] in existing_names:
             logging.warn(
