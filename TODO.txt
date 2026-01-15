@@ -1,0 +1,6 @@
+Żeby jakiś AI na podstawie docker-compose.yml:
+
+1. Zwalidowa porty i usugi na podstawie dokumentacji z dockerhub dla kontenerów
+2. Utworzenie sieci dla docker compose stacka aby odwolanie do innych kontenerów odnościo się np. gophish.ecample.com
+3. W oparciu o dostępne materiay szkoleniowe zaprojektowanie przebiegu kampani phishingowej dla tego stacka
+4. Wygenerowanie raportu z dokumentacją itd...
