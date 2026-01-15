@@ -26,6 +26,10 @@ services:
     image: cisagov/gophish:0.11.0-cisa.1
     init: true
     restart: always
+    hostname: gophish
+    environment:
+      - PRIMARY_DOMAIN=example.com
+      - RELAY_IP=172.16.202.0/24
     ports:
       - target: 3333
         published: 3333
@@ -52,7 +56,11 @@ services:
 
   mailhog:
     image: mailhog/mailhog
+    hostname: mailhog
     restart: always
+    environment:
+      - PRIMARY_DOMAIN=example.com
+      - RELAY_IP=172.16.202.0/24
     ports:
       - target: 8025
         published: 8025
@@ -61,12 +69,11 @@ services:
 
   postfix:
     image: cisagov/postfix:0.0.6
-    init: false
+    hostname: postfix
+    init: true
     restart: always
     environment:
       - PRIMARY_DOMAIN=example.com
-      # Mail relay through postfix will only work if the RELAY_IP matches
-      # the default network subnet defined below.
       - RELAY_IP=172.16.202.0/24
     ports:
       - target: 25
@@ -84,6 +91,42 @@ services:
         target: privkey.pem
       - source: postfix_users_txt
         target: users.txt
+
+
+  dovecot:
+    image: dovecot/dovecot:latest
+    hostname: dovecot
+    init: true
+    environment:
+      - PRIMARY_DOMAIN=example.com
+      - RELAY_IP=172.16.202.0/24
+    ports:
+      - target: 31143
+        published: 8026 
+        protocol: tcp
+        mode: host
+      - target: 9090
+        published: 9090
+        protocol: tcp
+        mode: host
+      - target: 8080
+        published: 8029
+        protocol: tcp
+        mode: host
+
+
+  roundcube:
+    image: robbertkl/roundcube
+    hostname: roundcube
+    init: true
+    environment:
+      - PRIMARY_DOMAIN=example.com
+      - RELAY_IP=172.16.202.0/24
+    ports:
+      - target: 80
+        published: 8030
+        protocol: tcp
+        mode: host
 
 networks:
   default:
