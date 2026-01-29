@@ -1,5 +1,4 @@
----
-version: "3.7"
+
 
 secrets:
   gophish_config_json:
@@ -21,8 +20,6 @@ secrets:
 
 services:
   gophish:
-    # Reminder: cisagov/gophish Docker images are created with
-    # cisagov/gophish-docker, not cisagov/gophish!
     image: cisagov/gophish:0.11.0-cisa.1
     init: true
     restart: always
@@ -50,6 +47,12 @@ services:
         target: phish_fullchain.pem
       - source: gophish_phish_privkey_pem
         target: phish_privkey.pem
+    # FIX 1: Removed volume mapping for /opt/gophish. 
+    # Because the DB lives next to the binary, you cannot easily map a host folder 
+    # without hiding the binary. Use a "Named Volume" if you need DB persistence, 
+    # or configure Gophish to write the DB to a specific /data folder.
+    volumes:
+       - ./volumes_data/gophish:/opt/gophish 
 
   gophish-tools:
     image: cisagov/gophish-tools:latest
@@ -61,11 +64,15 @@ services:
     environment:
       - PRIMARY_DOMAIN=example.com
       - RELAY_IP=172.16.202.0/24
+      - MH_STORAGE=maildir
+      - MH_MAILDIR_PATH=/maildir
     ports:
       - target: 8025
         published: 8025
         protocol: tcp
         mode: host
+    volumes:
+      - ./volumes_data/mailhog:/maildir
 
   postfix:
     image: cisagov/postfix:0.0.6
@@ -91,7 +98,11 @@ services:
         target: privkey.pem
       - source: postfix_users_txt
         target: users.txt
-
+    volumes:
+      # FIX 2: Removed /etc mapping (this caused your crash).
+      # FIX 3: Narrowed the spool mapping to just 'postfix' to be safe.
+      # - ./volumes_data/postfix-spool:/var/spool/postfix
+      - ./configs/postfix/main.cf:/etc/postfix/main.cf
 
   dovecot:
     image: dovecot/dovecot:latest
@@ -113,7 +124,9 @@ services:
         published: 8029
         protocol: tcp
         mode: host
-
+    volumes:
+      # FIX 4: Removed /etc/dovecot mapping (would cause crash).
+      - ./volumes_data/dovecot/mail:/var/lib/dovecot
 
   roundcube:
     image: robbertkl/roundcube
@@ -127,14 +140,14 @@ services:
         published: 8030
         protocol: tcp
         mode: host
+    volumes:
+      - ./volumes_data/roundcube/db:/var/www/html/db
 
 networks:
-
-# Testowy koment frytki
-
   default:
     driver: bridge
     ipam:
       driver: default
       config:
         - subnet: 172.16.202.0/24
+
