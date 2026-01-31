@@ -1,5 +1,3 @@
-
-
 secrets:
   gophish_config_json:
     file: ./secrets/gophish/config.json
@@ -47,12 +45,12 @@ services:
         target: phish_fullchain.pem
       - source: gophish_phish_privkey_pem
         target: phish_privkey.pem
-    # FIX 1: Removed volume mapping for /opt/gophish. 
-    # Because the DB lives next to the binary, you cannot easily map a host folder 
-    # without hiding the binary. Use a "Named Volume" if you need DB persistence, 
-    # or configure Gophish to write the DB to a specific /data folder.
+
     volumes:
-       - ./volumes_data/gophish:/opt/gophish 
+      - ./volumes_data/gophish/data:/home/cisa/data
+      # Generalnie wystarczy sam volume z /home/cisa/data, poniewa¿ tam jest plikowa db
+      # - ./volumes_data/gophish/db:/home/cisa/db  
+      - ./volumes_data/gophish/run/secrets:/run/secrets
 
   gophish-tools:
     image: cisagov/gophish-tools:latest
@@ -99,8 +97,6 @@ services:
       - source: postfix_users_txt
         target: users.txt
     volumes:
-      # FIX 2: Removed /etc mapping (this caused your crash).
-      # FIX 3: Narrowed the spool mapping to just 'postfix' to be safe.
       # - ./volumes_data/postfix-spool:/var/spool/postfix
       - ./configs/postfix/main.cf:/etc/postfix/main.cf
 
@@ -125,7 +121,6 @@ services:
         protocol: tcp
         mode: host
     volumes:
-      # FIX 4: Removed /etc/dovecot mapping (would cause crash).
       - ./volumes_data/dovecot/mail:/var/lib/dovecot
 
   roundcube:
